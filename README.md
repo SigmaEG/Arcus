@@ -7,9 +7,9 @@ It is written in C and is meant to be easily configurable, internally of course.
 - If you wish to add more packages to the script then you may do so in the `packages` 2D Array.
 
 > [!IMPORTANT]
-> Read [Format](#format) if you wish to implement new environment variables and packages.
->
 > Read [Usage](#usage) if you wish to learn how to use arcus.
+> 
+> Read [Format](#format) if you wish to implement new environment variables and packages.
 
 ## Usage
 > [!NOTE]
