@@ -1,6 +1,6 @@
 > Arcus
 
-Arcus is a simple lightweight Scripting Package Manager.
+Arcus is a simple lightweight Scriptable Package Manager.
 
 It is written in C and is meant to be easily configurable, internally of course.
 If you wish to add more environment variables then you may do so in the `env_args` 2D Array.
