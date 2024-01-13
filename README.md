@@ -30,7 +30,7 @@ operations:
 
 ## Format
 
-> env_args
+> static const char* env_args[][2] {...}
 ```c
 // DEFAULT env_args IMPLEMENTATION
 static const char* env_args[][2] = {
@@ -82,7 +82,7 @@ Where the environment variables expand to the following:
 - `${ARCUS_CLANG}` expands to `clang -Wall -Wextra -pedantic -o`
 - `${ARCUS_PACKAGES}` expands to `arcus` (the header of your package)
 
-> packages
+> static const char* packages[][2] {...}
 
 ```c
 static const char* packages[][2] = {
@@ -115,3 +115,5 @@ Where the environment variables expand to the following:
 - `${ARCUS_SU_PACMAN}` expands to `sudo pacman -S`
 - `${ARCUS_DEFAULT_PACMAN_ARGS}` expands to `--needed --noconfirm`
 - `${ARCUS_PACKAGES}` expands to `neofetch` (the header of your package)
+
+Refer to [env_args](#format) in regards to environment variables as such as `${ARCUS_SU_PACMAN}`, `${ARCUS_DEFAULT_PACMAN_ARGS}` and `${ARCUS_PACKAGES}` 
