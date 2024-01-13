@@ -12,6 +12,13 @@ It is written in C and is meant to be easily configurable, internally of course.
 > Read [Usage](#usage) if you wish to learn how to use arcus.
 
 ## Usage
+> [!NOTE]
+> Running `arcus install` whilst there are `packages` present that use package managers that require `root` permissions will ask for them mid-installation.
+
+> [!TIP]
+> Ignoring the installation of a one or more `packages` is fairly simple, simply append the `--ignore` flag to the end of arcus install following a whitespace-separated list of `packages` to ignore.
+>
+> For example, if you didn't want to install `lolcat` and `neofetch` and they are listed packages in `static const char* packages[][2]{...}` then you can run `arcus` as `arcus install --ignore lolcat neofetch`
 ```bash
 usage: arcus <operation> [...]
 operations:
@@ -20,13 +27,6 @@ operations:
 	arcus list {--ignore ...} (arguments after --ignore are listed as ignored packages, separated by a whitespace)
 	arcus install {--ignore ...} (requires root, arguments after --ignore are listed as ignored packages, separated by a whitespace)
 ```
-> [!NOTE]
-> Running `arcus install` whilst there are `packages` present that use package managers that require `root` permissions will ask for them mid-installation.
-
-> [!TIP]
-> Ignoring the installation of a one or more `packages` is fairly simple, simply append the `--ignore` flag to the end of arcus install following a whitespace-separated list of `packages` to ignore.
->
-> For example, if you didn't want to install `lolcat` and `neofetch` and they are listed packages in `static const char* packages[][2]{...}` then you can run `arcus` as `arcus install --ignore lolcat neofetch`
 
 ## Format
 
@@ -53,8 +53,9 @@ static const char* env_args[][2] = {
 };
 ```
 For example if you wanted to add the environment variable for compiling something with clang, you can implement it as so:
+
 > [!WARNING]
-> Implementing an environment variable in `env_args` WILL call `setenv` with the `int overwrite` flag set to `1` `(true)`, be cautious about overwriting already-existing environment variables in your Shell Session.
+> Implementing an environment variable in `env_args` WILL call `int setenv(const char *name, const char *value, int overwrite)` with the `int overwrite` flag set to `1` `(true)`. Hence, be cautious about overwriting already-existing environment variables in your Shell Session. Though they will reset upon exiting the Shell Session.
 ```c
 static const char* env_args[][2] = {
   ...
@@ -95,6 +96,9 @@ static const char* packages[][2] = {
   }
 };
 ```
+
+> [!CAUTION]
+> Do ***NOT*** implement a package header that contains a whitespace if you wish for it to be ignorable using the `--ignore ...` flag. Otherwise, if you wish to install multiple packages at once using `${ARCUS_PACKAGES}` then you may put multiple headers such you require it.
 
 For example, if you wanted to install `neofetch` with `sudo pacman -S` you can implement a package as so:
 ```c
