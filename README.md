@@ -6,8 +6,12 @@ It is written in C and is meant to be easily configurable, internally of course.
 - If you wish to add more environment variables then you may do so in the `env_args` 2D Array.
 - If you wish to add more packages to the script then you may do so in the `packages` 2D Array.
 
-Read [Format](#format) on how to implement new environment variables and packages.
-> Usage
+> [!IMPORTANT]
+> Read [Format](#format) if you wish to implement new environment variables and packages.
+>
+> Read [Usage](#usage) if you wish to learn how to use arcus.
+
+## Usage
 ```bash
 usage: arcus <operation> [...]
 operations:
@@ -42,6 +46,8 @@ static const char* env_args[][2] = {
 };
 ```
 For example if you wanted to add the environment variable for compiling something with clang, you can implement it as so:
+> [!WARNING]
+> Implementing an environment variable in `env_args` WILL call `setenv` with the `int overwrite` flag set to `1` `(true)`, be cautious about overwriting already-existing environment variables in your Shell Session.
 ```c
 static const char* env_args[][2] = {
   ...
