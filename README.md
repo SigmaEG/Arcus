@@ -25,7 +25,7 @@ operations:
 	arcus {-h --help}
 	arcus {-V --version}
 	arcus list {--ignore ...} (arguments after --ignore are listed as ignored packages, separated by a whitespace)
-	arcus install {--ignore ...} (requires root, arguments after --ignore are listed as ignored packages, separated by a whitespace)
+	arcus install {--ignore ...} (may require root permissions, arguments after --ignore are listed as ignored packages, separated by a whitespace)
 ```
 
 ## Format
