@@ -3,8 +3,8 @@
 Arcus is a simple lightweight Scriptable Package Manager.
 
 It is written in C and is meant to be easily configurable, internally of course.
-If you wish to add more environment variables then you may do so in the `env_args` 2D Array.
-If you wish to add more packages to the script then you may do so in the `packages` 2D Array.
+- If you wish to add more environment variables then you may do so in the `env_args` 2D Array.
+- If you wish to add more packages to the script then you may do so in the `packages` 2D Array.
 
 Read [Format](#format) on how to implement new environment variables and packages.
 > Usage
