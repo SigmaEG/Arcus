@@ -78,14 +78,6 @@ static const char* packages[][2] = {
     "${ARCUS_SU_PACMAN}yu ${ARCUS_DEFAULT_PACMAN_ARGS}"
   },
   {
-    "gnome",
-    "${ARCUS_SU_PACMAN} ${ARCUS_DEFAULT_PACMAN_ARGS} ${ARCUS_PACKAGES} gnome-tweaks"
-  },
-  {
-    "enable_gdm",
-    "sudo systemctl enable --now gdm"
-  },
-  {
     "color-parallel-pacman",
     "sudo sed -i \"s/#Color/Color/g\" /etc/pacman.conf;"
     "sudo sed -i \"s/#ParallelDownloads/ParallelDownloads/g\" /etc/pacman.conf"
@@ -95,6 +87,18 @@ static const char* packages[][2] = {
     "${ARCUS_SU_PACMAN} ${ARCUS_DEFAULT_PACMAN_ARGS} ${ARCUS_PACKAGES};"
     "sudo cp -i /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak;"
     "sudo reflector --verbose --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist"
+  },
+  {
+    "gnome",
+    "${ARCUS_SU_PACMAN} ${ARCUS_DEFAULT_PACMAN_ARGS} ${ARCUS_PACKAGES} gnome-tweaks"
+  },
+  {
+    "enable_gdm",
+    "sudo systemctl enable --now gdm"
+  },
+  {
+    "valgrind",
+    "${ARCUS_SU_PACMAN} ${ARCUS_DEFAULT_PACMAN_ARGS} ${ARCUS_PACKAGES}"
   },
   {
     "base-devel",

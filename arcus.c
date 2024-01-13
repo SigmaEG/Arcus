@@ -67,7 +67,9 @@ arcus_getline(
   if (read_count == 1) {
     free(line);
     line = NULL;
-    *size_out = 0;
+
+    if (size_out != NULL)
+      *size_out = 0;
 
     return NULL;
   }
@@ -204,6 +206,8 @@ install_packages(
 
       exit(0);
     }
+
+    free(confirmation);
   }
 
   printf(KGRN "Beginning installation...\n\n");
@@ -226,7 +230,9 @@ install_packages(
     int32_t ret = system(packages[pkg_idx][1]);
     if (ret == 130 || ret == 2 || ret == 33280) {
       printf(KRED "\n< INSTALLATION INTERRUPTED >\n\n");
-      exit(130);
+      free(ignore);
+
+      exit(2);
     }
   }
 
