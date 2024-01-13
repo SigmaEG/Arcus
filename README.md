@@ -20,6 +20,13 @@ operations:
 	arcus list {--ignore ...} (arguments after --ignore are listed as ignored packages, separated by a whitespace)
 	arcus install {--ignore ...} (requires root, arguments after --ignore are listed as ignored packages, separated by a whitespace)
 ```
+> [!NOTE]
+> Running `arcus install` whilst there are `packages` present that use package managers that require `root` permissions will ask for them mid-installation.
+
+> [!TIP]
+> Ignoring the installation of a one or more `packages` is fairly simple, simply append the `--ignore` flag to the end of arcus install following a whitespace-separated list of `packages` to ignore.
+>
+> For example, if you didn't want to install `lolcat` and `neofetch` and they are listed packages in `static const char* packages[][2]{...}` then you can run `arcus` as `arcus install --ignore lolcat neofetch`
 
 ## Format
 
