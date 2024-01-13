@@ -64,7 +64,7 @@ static const char* env_args[][2] = {
     "clang -Wall -Wextra -pedantic -o"
   }
   ...
-}
+};
 ```
 This environment variable can then be implemented in a `package` as so:
 ```c
