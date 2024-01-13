@@ -52,10 +52,10 @@ static const char* env_args[][2] = {
   }
 };
 ```
-For example if you wanted to add the environment variable for compiling something with clang, you can implement it as so:
-
 > [!WARNING]
 > Implementing an environment variable in `env_args` WILL call `int setenv(const char *name, const char *value, int overwrite)` with the `int overwrite` flag set to `1` `(true)`. Hence, be cautious about overwriting already-existing environment variables in your Shell Session. Though they will reset upon exiting the Shell Session.
+
+For example if you wanted to add the environment variable for compiling something with clang, you can implement it as so:
 ```c
 static const char* env_args[][2] = {
   ...
