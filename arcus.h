@@ -32,7 +32,7 @@
 #define KCYN  "\x1B[36m"
 #define KWHT  "\x1B[37m"
 
-#define ARCUS_VER "v0.2.7"
+#define ARCUS_VER "v0.2.8"
 #define LOLCAT_SUPPORT false
 
 // Source: https://manytools.org/hacker-tools/convert-images-to-ascii-art/go/
