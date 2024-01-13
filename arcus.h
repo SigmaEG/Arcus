@@ -9,9 +9,18 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include <unistd.h>
 #include <string.h>
 #include <ctype.h>
+
+#ifdef __unix__
+  #include <unistd.h>
+#endif
+
+#ifdef _WIN32
+  #include <Windows.h>
+  int32_t setenv(const char* name, const char* value, int32_t overwrite);
+  int32_t unsetenv(const char* name);
+#endif
 
 // Source: https://stackoverflow.com/a/27125283
 #define KNRM  "\x1B[0m"

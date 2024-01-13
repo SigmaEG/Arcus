@@ -7,11 +7,33 @@
 
 #include "arcus.h"
 
+#ifdef _WIN32
+  int32_t setenv(const char *name, const char *value, int32_t overwrite) {   
+    int32_t errcode = 0;
+    
+    if (!overwrite) {
+      size_t envsize = 0;
+      errcode = getenv_s(&envsize, NULL, 0, name);
+      
+      if (errcode || envsize)
+        return errcode;
+    }
+
+    return _putenv_s(name, value);
+  }
+
+  int32_t unsetenv(const char* name) {
+    return setenv(name, "", 1);
+  }
+#endif
+
 // Checks whether lolcat is found in /usr/bin for LOLCAT_SUPPORT
 bool
 has_lolcat(void) {
-  if (LOLCAT_SUPPORT)
-    return access("/usr/bin/lolcat", F_OK) == 0 ? true : false;
+  #ifdef __unix__
+    if (LOLCAT_SUPPORT)
+      return access("/usr/bin/lolcat", F_OK) == 0 ? true : false;
+  #endif
 
   return false;
 }
@@ -341,13 +363,15 @@ int main(
         ignores
       );
       free(ignore_list);
-    
-      if (has_lolcat() && access("/usr/bin/neofetch", F_OK) == 0)
-        system("neofetch | lolcat; echo -e \"< INSTALLATION SUCCESSFUL >\nEnjoy! :)\" | lolcat");
-      else if (access("/usr/bin/neofetch", F_OK) == 0) {
-        system("neofetch");
-        printf(KGRN "< INSTALLATION SUCCESSFUL >\nEnjoy! :)\n");
-      }
+
+      #ifdef __unix__
+        if (has_lolcat() && access("/usr/bin/neofetch", F_OK) == 0)
+          system("neofetch | lolcat; echo -e \"< INSTALLATION SUCCESSFUL >\nEnjoy! :)\" | lolcat");
+        else if (access("/usr/bin/neofetch", F_OK) == 0) {
+          system("neofetch");
+          printf(KGRN "< INSTALLATION SUCCESSFUL >\nEnjoy! :)\n");
+        }
+      #endif
 
       exit(0);
     }
