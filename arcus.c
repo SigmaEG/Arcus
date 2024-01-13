@@ -268,7 +268,7 @@ display_help(void) {
     "\tarcus %s{-h --help}%s\n"
     "\tarcus %s{-V --version}%s\n"
     "\tarcus list %s{--ignore ...}%s %s(arguments after --ignore are listed as ignored packages, separated by a whitespace)%s\n"
-    "\tarcus install %s{--ignore ...}%s %s(requires root, arguments after --ignore are listed as ignored packages, separated by a whitespace)\n\n",
+    "\tarcus install %s{--ignore ...}%s %s(may require root permissions, arguments after --ignore are listed as ignored packages, separated by a whitespace)\n\n",
     KYEL, KMAG, KCYN, KMAG, KYEL, KMAG, KCYN, KMAG, KCYN, KMAG, KCYN, KMAG, KYEL, KMAG, KCYN, KMAG, KYEL
   );
 }
