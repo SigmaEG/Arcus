@@ -1,4 +1,4 @@
-# Arcus v0.2.8
+# Arcus v0.2.9
 
 Arcus is a simple lightweight Scriptable Package Manager.
 

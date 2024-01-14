@@ -8,6 +8,47 @@
 #include "arcus.h"
 
 #ifdef _WIN32
+  #ifdef ARCUS_INITED_WIN_TERM_PROC
+    static HANDLE stdoutHandle;
+    static DWORD outModeInit;
+
+    void setupConsole(void) {
+      DWORD outMode = 0;
+      stdoutHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+      
+      if(stdoutHandle == INVALID_HANDLE_VALUE)
+        exit(GetLastError());
+      
+      if(!GetConsoleMode(stdoutHandle, &outMode))
+        exit(GetLastError());
+      
+      outModeInit = outMode;
+      
+      // Enable ANSI escape codes
+      outMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+      
+      if(!SetConsoleMode(stdoutHandle, outMode))
+        exit(GetLastError());
+    }
+    
+    void restoreConsole(void) {
+      // Reset colors
+      printf("\x1b[0m");	
+    
+      // Reset console mode
+      if(!SetConsoleMode(stdoutHandle, outModeInit))
+        exit(GetLastError());
+    }
+  #else
+    void setupConsole(void) {}
+    
+    void restoreConsole(void) {
+        // Reset colors
+        printf("\x1b[0m");
+    }
+  #endif
+  /* Source-End */
+
   int32_t setenv(const char *name, const char *value, int32_t overwrite) {   
     int32_t errcode = 0;
     
@@ -311,6 +352,10 @@ int main(
   int argc,
   char** argv
 ) {
+  #ifdef _WIN32
+    setupConsole();
+  #endif
+
   char* init_arg = NULL;
 
   if (argc >= 2)
@@ -319,6 +364,11 @@ int main(
   if (init_arg != NULL) {
     if (strcmp(init_arg, "-V") == 0 || strcmp(init_arg, "--version") == 0) {
       display_ver();
+
+      #ifdef _WIN32
+        restoreConsole();
+      #endif
+
       exit(0);
     }
 
@@ -342,6 +392,9 @@ int main(
       free(ignore_list);
     
       printf(KBLU "\nRun \"%sarcus%s install {--ignore ...}%s\" to install packages\n", KMAG, KCYN, KBLU);
+      #ifdef _WIN32
+        restoreConsole();
+      #endif
       exit(0);
     }
 
@@ -373,11 +426,20 @@ int main(
         }
       #endif
 
+      #ifdef _WIN32
+        restoreConsole();
+      #endif
+
       exit(0);
     }
   }
 
   display_help();
+
+  #ifdef _WIN32
+    restoreConsole();
+  #endif
+
   exit(0);
 
   return 0;

@@ -2,5 +2,5 @@ clang \
   -Wall \
   -Wextra \
   -pedantic \
-  -o arcus \
+  -o arcus-linux \
   arcus.c

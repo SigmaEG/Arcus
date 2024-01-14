@@ -17,12 +17,22 @@
 #endif
 
 #ifdef _WIN32
-  #include <Windows.h>
+  // Source: https://solarianprogrammer.com/2019/04/08/c-programming-ansi-escape-codes-windows-macos-linux-terminals/
+  #include <windows.h>
+  #ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
+    #define ARCUS_INITED_WIN_TERM_PROC
+    #define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
+  #endif
+
+  void setupConsole(void);
+  void restoreConsole(void);
+  
+  /* Source-End */
+
   int32_t setenv(const char* name, const char* value, int32_t overwrite);
   int32_t unsetenv(const char* name);
 #endif
 
-// Source: https://stackoverflow.com/a/27125283
 #define KNRM  "\x1B[0m"
 #define KRED  "\x1B[31m"
 #define KGRN  "\x1B[32m"
@@ -32,7 +42,7 @@
 #define KCYN  "\x1B[36m"
 #define KWHT  "\x1B[37m"
 
-#define ARCUS_VER "v0.2.8"
+#define ARCUS_VER "v0.2.9"
 #define LOLCAT_SUPPORT false
 
 // Source: https://manytools.org/hacker-tools/convert-images-to-ascii-art/go/
@@ -148,7 +158,21 @@ static const char* packages[][2] = {
   },
   {
     "kate",
-    "${ARCUS_SU_PACMAN} ${ARCUS_DEFAULT_PACMAN_ARGS} ${ARCUS_PACKAGES};"
+    "${ARCUS_SU_PACMAN} ${ARCUS_DEFAULT_PACMAN_ARGS} ${ARCUS_PACKAGES}"
+  },
+  {
+    "mingw-w64",
+    "${ARCUS_SU_PACMAN} ${ARCUS_DEFAULT_PACMAN_ARGS} ${ARCUS_PACKAGES}"
+  },
+  {
+    "mingw-w64-wclang-git",
+    "${ARCUS_YAY} ${ARCUS_DEFAULT_YAY_ARGS} ${ARCUS_PACKAGES} mingw-w64-headers"
+  },
+  {
+    "virtualbox",
+    "${ARCUS_SU_PACMAN} ${ARCUS_DEFAULT_PACMAN_ARGS} ${ARCUS_PACKAGES} linux-lts-headers;"
+    "sudo modprobe vboxdrv;"
+    "wget -c https://download.virtualbox.org/virtualbox/7.0.12/VBoxGuestAdditions_7.0.12.iso -O ~/Downloads"
   },
   {
     "flatpak", 
