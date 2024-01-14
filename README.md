@@ -140,7 +140,7 @@ Refer to [env_args](#format) in regards to environment variables as such as `${A
 ...
 ```
 > [!WARNING]
-> Ensure all of your commands are within a single string and not on a newline as the parser won't pick this up and may potentially cause further issues for Arcus Script.
+> Ensure all of your commands are within a single string and not on a newline as the parser won't pick this up and may potentially cause further issues for Arcus during runtime.
 
 # Credits
 
