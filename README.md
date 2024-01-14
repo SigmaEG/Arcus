@@ -112,19 +112,30 @@ Where the environment variables expand to the following:
 Refer to [env_args](#format) in regards to environment variables as such as `${ARCUS_SU_PACMAN}`, `${ARCUS_DEFAULT_PACMAN_ARGS}` and `${ARCUS_PACKAGES}` 
 
 > [!TIP]
+> `"` quotes inside of a packages body don't require to be escaped `(\")` as the leading and ending quotations are stripped by the program during parsing.
+>
 > If you wish to run multiple commands at once for each package, then refer to your Operating Systems guide on how to separate commands in your `Command Interpreter` as `Arcus` takes use of `int system(const char* command)`.
 > For example in `bash`, commands can be separated by trailing semi-colons (`;`).
 > 
 > In Windows, `int system(const char* command)` takes use of `cmd.exe` from `%PATH%`. To separate commands in `cmd.exe` you can use the ampersand `(&)` symbol.
 >
 > The same is for reading Shell Environment Variables. In `bash` it is the equivalent of `${VARIABLE_NAME}` whereas in `cmd.exe` it would be `%VARIABLE_NAME%`, be wary of this.
->
+
 > An example of this, in `bash`, would be the following:
 ```
 ...
 {
   "lolcat",
-  "${ARCUS_SU_PACMAN} ${ARCUS_DEFAULT_PACMAN_ARGS} ${ARCUS_PACKAGES}; echo \"Hello, World!\" | lolcat"
+  "${ARCUS_SU_PACMAN} ${ARCUS_DEFAULT_PACMAN_ARGS} ${ARCUS_PACKAGES}; echo "Hello, World!" | lolcat"
+}
+...
+```
+> However, an example of this using `cmd.exe` would be the following:
+```
+...
+{
+  "lolcat",
+  "%ARCUS_SU_PACMAN% %ARCUS_DEFAULT_PACMAN_ARGS% %ARCUS_PACKAGES% & echo "Hello, World!""
 }
 ...
 ```
