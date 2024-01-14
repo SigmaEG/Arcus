@@ -538,13 +538,13 @@
         system(lolcat);
         free(lolcat);
       } else
-        printf(KBLU "< ALLOCATING TEMPORARY ENVIRONMENT VARIABLE : %s%s=%s%s >\n", KMAG, name, value, KBLU);
+        printf("%s< ALLOCATING TEMPORARY ENVIRONMENT VARIABLE : %s%s=%s%s >\n", KBLU, KMAG, name, value, KBLU);
     #else
-      printf(KBLU "< ALLOCATING TEMPORARY ENVIRONMENT VARIABLE : %s%s=%s%s >\n", KMAG, name, value, KBLU);
+      printf("%s< ALLOCATING TEMPORARY ENVIRONMENT VARIABLE : %s%s=%s%s >\n", KBLU, KMAG, name, value, KBLU);
     #endif
 
     if (setenv(name, value, 1) == 1) {
-      fprintf(stderr, KRED "< FAILED TO ALLOCATE TEMPORARY ENVIRONMENT VARIABLE %s\"%s\"%s >\n", KMAG, name, KBLU);
+      fprintf(stderr, "%s< FAILED TO ALLOCATE TEMPORARY ENVIRONMENT VARIABLE %s\"%s\"%s >\n", KRED, KMAG, name, KBLU);
 
       return false;
     }
@@ -558,9 +558,9 @@
         free(lolcat);
       }
       else
-        printf(KGRN "< SUCCESSFULLY ALLOCATED TEMPORARY ENVIRONMENT VARIABLE : %s%s=%s%s >\n", KMAG, name, value, KGRN);
+        printf("%s< SUCCESSFULLY ALLOCATED TEMPORARY ENVIRONMENT VARIABLE : %s%s=%s%s >\n", KGRN, KMAG, name, value, KGRN);
     #else
-        printf(KGRN "< SUCCESSFULLY ALLOCATED TEMPORARY ENVIRONMENT VARIABLE : %s%s=%s%s >\n", KMAG, name, value, KGRN);
+        printf("%s< SUCCESSFULLY ALLOCATED TEMPORARY ENVIRONMENT VARIABLE : %s%s=%s%s >\n", KGRN, KMAG, name, value, KGRN);
     #endif
 
 
@@ -581,7 +581,7 @@
   }
 
   bool
-  is_ignored(
+   is_ignored(
     const char* package,
     const char** ignore,
     const int32_t n_ignore
@@ -599,7 +599,7 @@
     const char** ignore,
     const int32_t n_ignore
   ) {
-    printf(KGRN "Packages to Install:\n");
+    printf("%sPackages to Install:\n", KGRN);
 
     for (int32_t pkg_idx = 0; pkg_idx < n_packages; ++pkg_idx) {
       const char* pkg_name = packages[pkg_idx][0];
@@ -617,10 +617,10 @@
       else
         pkg_how = "SELF-DEFINED";
 
-      printf(KCYN "[%s]:%s %s%s%s\n", pkg_how, KNRM, KMAG, pkg_name, ignored ? KYEL " [IGNORED]" : "");
+      printf("%s[%s]:%s %s%s%s%s\n", KCYN, pkg_how, KNRM, KMAG, pkg_name, KYEL, ignored ? " [IGNORED]" : "");
     }
 
-    printf(KYEL "\n%d Package%s Ignored%s\n", n_ignore, n_ignore == 1 ? "" : "(s)", n_ignore == 0 ? ", See \"arcus {-h --help}\"" : "");
+    printf("%s\n%d Package%s Ignored%s\n", KYEL, n_ignore, n_ignore == 1 ? "" : "(s)", n_ignore == 0 ? ", See \"arcus {-h --help}\"" : "");
   }
 
   void
@@ -630,13 +630,13 @@
   ) {
     list_packages(ignore, n_ignore);
 
-    printf(KBLU "\nAre you sure you'd like to continue to installation? (%sY%s/%sn%s):%s ", KGRN, KBLU, KRED, KBLU, KGRN);
+    printf("%s\nAre you sure you'd like to continue to installation? (%sY%s/%sn%s):%s ", KBLU, KGRN, KBLU, KRED, KBLU, KGRN);
 
     char* confirmation = arcus_getline(NULL, true, '\n', stdin);
 
     if (confirmation != NULL) {
       if (tolower(confirmation[0]) != 'y') {
-        printf(KRED "\n< INSTALLATION CANCELED >\n");
+        printf("%s\n< INSTALLATION CANCELED >\n", KRED);
         free(ignore);
 
         exit(0);
@@ -645,7 +645,7 @@
       free(confirmation);
     }
 
-    printf(KGRN "Beginning installation...\n\n");
+    printf("%sBeginning installation...\n\n", KGRN);
 
     init_env_args(false);
 
@@ -656,7 +656,8 @@
       bool ignored = is_ignored(pkg_name, ignore, n_ignore);
 
       if (ignored) {
-        printf(KYEL "< IGNORING : %s >\n", pkg_name);
+        printf("%s< IGNORING : %s >\n", KYEL, pkg_name);
+
         continue;
       }
 
@@ -664,7 +665,7 @@
 
       int32_t ret = system(packages[pkg_idx][1]);
       if (ret == 130 || ret == 2 || ret == 33280) {
-        printf(KRED "\n< INSTALLATION INTERRUPTED >\n\n");
+        printf("%s\n< INSTALLATION INTERRUPTED >\n\n", KRED);
         free(ignore);
 
         exit(2);
@@ -692,12 +693,12 @@
 
   void
   display_ver(void) {
-    printf(KMAG
-      "  Arcus %s" ARCUS_VER "\n"
+    printf(
+      "%s  Arcus %s" ARCUS_VER "\n"
       "  Copyright (C) 2015 - 2024 SigmaTech\n\n"
       "  %sThis program may be freely redistributed under the terms of the GNU General Public License.\n%s"
       SIGMA_SYMBOL_ASCII,
-      KYEL, KBLU, KMAG
+      KMAG, KYEL, KBLU, KMAG
     );
   }
 
@@ -771,8 +772,6 @@
     if (parse_command(arg_name) == -1)
       return NULL; // Invalid Command to Parse
 
-    printf("< BEGINNING ARGUMENT PARSER : %s >\n", arg_name);
-
     const char** arg_params = NULL;
     int32_t n_arg_params = 0;
     bool dynamic = false;
@@ -789,7 +788,6 @@
         return NULL;
       }
     } else if (n_expected_params == -1) {
-      printf("dynamic\n");
       dynamic = true;
       arg_params = (const char**)calloc(1, sizeof(const char*));
       
@@ -872,6 +870,8 @@ int32_t main(
 
       #if defined(_WIN32)
         disable_ansi();
+      #else
+        printf("%s\n", KNRM);
       #endif
 
       exit(0);
@@ -883,7 +883,8 @@ int32_t main(
 
       if (packages == NULL || env_args == NULL) {
         printf(
-          KRED "< FAILED TO PARSE %s%s%s >",
+          "%s< FAILED TO PARSE %s%s%s >",
+          KRED,
           packages == NULL ? "PACKAGES" : "",
           packages == NULL && env_args == NULL ? " AND " : "",
           env_args == NULL ? "ENVIRONMENT VARIABLES" : ""
@@ -891,13 +892,25 @@ int32_t main(
 
         #if defined(_WIN32)
           disable_ansi();
+        #else
+          printf("%s\n", KNRM);
         #endif
 
         exit(1);
       }
 
+      const char** ignore_list = NULL;
       int32_t ignores = 0;
-      const char** ignore_list = parse_arguments(argv + 2, argc - 2, "--ignore", -1, &ignores);
+
+      if (argc >= 4) {
+        ignore_list = parse_arguments(
+          argv + 2,
+          argc - 2,
+          "--ignore",
+          -1,
+          &ignores
+        );
+      }
 
       list_packages(
         (const char**)ignore_list,
@@ -908,10 +921,14 @@ int32_t main(
       free_char_2d(packages, &n_packages);
       free_char_2d(env_args, &n_env_args);
 
-      printf(KBLU "\nRun \"%sarcus%s install {--ignore ...}%s\" to install packages\n", KMAG, KCYN, KBLU);
+      printf("%s\nRun \"%sarcus%s install {--ignore ...}%s\" to install packages\n", KBLU, KMAG, KCYN, KBLU);
+
       #if defined(_WIN32)
         disable_ansi();
+      #else
+        printf("%s\n", KNRM);
       #endif
+
       exit(0);
     }
 
@@ -929,13 +946,25 @@ int32_t main(
 
         #if defined(_WIN32)
           disable_ansi();
+        #else
+          printf("%s\n", KNRM);
         #endif
 
         exit(1);
       }
 
+      const char** ignore_list = NULL;
       int32_t ignores = 0;
-      const char** ignore_list = parse_arguments(argv + 2, argc - 2, "--ignore", -1, &ignores);
+
+      if (argc >= 4) {
+        ignore_list = parse_arguments(
+          argv + 2,
+          argc - 2,
+          "--ignore",
+          -1,
+          &ignores
+        );
+      }
 
       install_packages(
         (const char**)ignore_list,
@@ -948,19 +977,23 @@ int32_t main(
       bool PRINTED_INS_SUCC = false;
 
       #if defined(__unix__) || defined(__linux__)
+
         if (has_lolcat() && has_neofetch()) {
           system("neofetch | lolcat; echo -e \"< INSTALLATION SUCCESSFUL >\nEnjoy! :)\" | lolcat");
           PRINTED_INS_SUCC = true;
         }
         else if (has_neofetch())
           system("neofetch");
+
       #endif
 
       if (!PRINTED_INS_SUCC)
-        printf(KGRN "< INSTALLATION SUCCESSFUL >\nEnjoy! :)\n");
+        printf("%s< INSTALLATION SUCCESSFUL >\nEnjoy! :)\n", KGRN);
 
       #if defined(_WIN32)
         disable_ansi();
+      #else
+        printf("%s\n", KNRM);
       #endif
 
       exit(0);
@@ -974,6 +1007,8 @@ int32_t main(
 
   #if defined(_WIN32)
     disable_ansi();
+  #else
+    printf("%s\n", KNRM);
   #endif
 
   exit(0);
