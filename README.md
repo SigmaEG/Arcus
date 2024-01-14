@@ -122,7 +122,7 @@ Refer to [env_args](#format) in regards to environment variables as such as `${A
 ...
 {
 	"lolcat",
-	"${ARCUS_SU_PACMAN} ${ARCUS_DEFAULT_PACMAN_ARGS} ${ARCUS_PACKAGES}; echo \"Hello, World!\" | lolcat"`
+	"${ARCUS_SU_PACMAN} ${ARCUS_DEFAULT_PACMAN_ARGS} ${ARCUS_PACKAGES}; echo \"Hello, World!\" | lolcat"
 }
 ...
 ```
