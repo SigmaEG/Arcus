@@ -205,6 +205,11 @@
         if (header == NULL && body == NULL) {
           strip_trailing_char(
             &line,
+            '\t',
+            false
+          );
+          strip_trailing_char(
+            &line,
             ' ',
             false
           );
@@ -235,6 +240,11 @@
         }
 
         if (body == NULL && header != NULL) {
+          strip_trailing_char(
+            &line,
+            '\t',
+            false
+          );
           strip_trailing_char(
             &line,
             ' ',
@@ -436,6 +446,10 @@
 
       int32_t unsetenv(const char* name) {
         return setenv(name, "", 1);
+      }
+
+      int32_t isatty(int32_t fd) {
+        return _isatty(fd);
       }
     #endif
 

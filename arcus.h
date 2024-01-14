@@ -36,14 +36,25 @@
 
 #pragma region GLOBAL DEFINITIONS
 
-  #define KNRM  "\x1B[0m"
-  #define KRED  "\x1B[31m"
-  #define KGRN  "\x1B[32m"
-  #define KYEL  "\x1B[33m"
-  #define KBLU  "\x1B[34m"
-  #define KMAG  "\x1B[35m"
-  #define KCYN  "\x1B[36m"
-  #define KWHT  "\x1B[37m"
+  #if defined(__unix__) || defined(__linux__)
+    #define KNRM isatty(STDOUT_FILENO) != 0 ? "\x1B[0m" : ""
+    #define KRED isatty(STDOUT_FILENO) != 0 ? "\x1B[31m" : ""
+    #define KGRN isatty(STDOUT_FILENO) != 0 ? "\x1B[32m" : ""
+    #define KYEL isatty(STDOUT_FILENO) != 0 ? "\x1B[33m" : ""
+    #define KBLU isatty(STDOUT_FILENO) != 0 ? "\x1B[34m" : ""
+    #define KMAG isatty(STDOUT_FILENO) != 0 ? "\x1B[35m" : ""
+    #define KCYN isatty(STDOUT_FILENO) != 0 ? "\x1B[36m" : ""
+    #define KWHT isatty(STDOUT_FILENO) != 0 ? "\x1B[37m" : ""
+  #else
+    #define KNRM ""
+    #define KRED ""
+    #define KGRN ""
+    #define KYEL ""
+    #define KBLU ""
+    #define KMAG ""
+    #define KCYN ""
+    #define KWHT ""
+  #endif
 
   #define RET_BASE_COMMAND 47395
   #define RET_SUB_COMMAND 47396
@@ -141,6 +152,8 @@ static int32_t n_env_args = 0;
       int32_t setenv(const char* name, const char* value, int32_t overwrite);
       int32_t unsetenv(const char* name);
       /* Source-End */
+
+      int32_t isatty(int32_t fd);
 
     #endif
 
