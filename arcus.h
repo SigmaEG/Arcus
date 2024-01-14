@@ -1,11 +1,12 @@
 /**
  * @name Arcus
  * @author https://github.com/SigmaEG/Arcus
- * @note Last Updated: 13th January, 2024
+ * @note Last Updated: 14th January, 2024
  * @note Script Manager
  */
 
 #pragma region INCLUDES
+  #define _POSIX_C_SOURCE 200112L
 
   #include <stdlib.h>
   #include <stdio.h>
@@ -15,11 +16,11 @@
   #include <ctype.h>
   #include <sys/stat.h>
 
-  #ifdef __unix__
+  #if defined(__unix__) || defined(__linux__)
     #include <unistd.h>
   #endif
 
-  #ifdef _WIN32
+  #if defined(_WIN32)
 
     // Source: https://solarianprogrammer.com/2019/04/08/c-programming-ansi-escape-codes-windows-macos-linux-terminals/
     #include <windows.h>
@@ -109,7 +110,7 @@ static int32_t n_env_args = 0;
 
   #pragma region OS-SPECIFIC FUNCTION DECLARATIONS
 
-    #ifdef __unix__
+    #if defined(__unix__) || defined(__linux__)
 
       /**
        * @author https://github.com/SigmaEG/Arcus/Arcus
@@ -131,7 +132,7 @@ static int32_t n_env_args = 0;
 
     #endif
 
-    #ifdef _WIN32
+    #if defined(_WIN32)
 
       // Source: https://solarianprogrammer.com/2019/04/08/c-programming-ansi-escape-codes-windows-macos-linux-terminals/
       void enable_ansi(void);

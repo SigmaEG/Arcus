@@ -1,7 +1,7 @@
 /**
  * @name Arcus
  * @author https://github.com/SigmaEG/Arcus
- * @note Last Updated: 13th January, 2024
+ * @note Last Updated: 14th January, 2024
  * @note Script Manager
  */
 
@@ -347,7 +347,7 @@
 
   #pragma region OS-SPECIFIC DECLARATIONS
 
-    #ifdef __unix__
+    #if defined(__unix__) || defined(__linux__)
       bool
       has_neofetch(void) {
         if (pathexists("/usr/local/bin/neofetch")
@@ -374,7 +374,7 @@
       }
     #endif
 
-    #ifdef _WIN32
+    #if defined(_WIN32)
       // Source: https://solarianprogrammer.com/2019/04/08/c-programming-ansi-escape-codes-windows-macos-linux-terminals/
       #ifdef ARCUS_INITED_WIN_TERM_PROC
         static HANDLE stdout_handle;
@@ -516,7 +516,7 @@
     const char* name,
     const char* value
   ) {
-    #ifdef __unix__
+    #if defined(__unix__) || defined(__linux__)
       if (has_lolcat()) {
         char* lolcat = (char*)calloc(strlen("echo \"< ALLOCATING TEMPORARY ENVIRONMENT VARIABLE :  =  >\" | lolcat") + strlen(name) + strlen(value) + 1, sizeof(char));
         sprintf(lolcat, "echo \"< ALLOCATING TEMPORARY ENVIRONMENT VARIABLE : %s=%s >\" | lolcat", name, value);
@@ -535,7 +535,7 @@
       return false;
     }
     
-    #ifdef __unix__
+    #if defined(__unix__) || defined(__linux__)
       if (has_lolcat()) {
         char* lolcat = (char*)calloc(strlen("echo \"< SUCCESSFULLY ALLOCATED TEMPORARY ENVIRONMENT VARIABLE :  =  >\" | lolcat") + strlen(name) + strlen(value) + 1, sizeof(char));
         sprintf(lolcat, "echo \"< SUCCESSFULLY ALLOCATED TEMPORARY ENVIRONMENT VARIABLE : %s=%s >\" | lolcat", name, value);
@@ -843,7 +843,7 @@ int32_t main(
   int32_t argc,
   const char** argv
 ) {
-  #ifdef _WIN32
+  #if defined(_WIN32)
     enable_ansi();
   #endif
 
@@ -856,7 +856,7 @@ int32_t main(
     if (strcmp(init_arg, "-V") == 0 || strcmp(init_arg, "--version") == 0) {
       display_ver();
 
-      #ifdef _WIN32
+      #if defined(_WIN32)
         disable_ansi();
       #endif
 
@@ -891,7 +891,7 @@ int32_t main(
       free_char_2d(env_args, &n_env_args);
 
       printf(KBLU "\nRun \"%sarcus%s install {--ignore ...}%s\" to install packages\n", KMAG, KCYN, KBLU);
-      #ifdef _WIN32
+      #if defined(_WIN32)
         disable_ansi();
       #endif
       exit(0);
@@ -925,7 +925,7 @@ int32_t main(
 
       bool PRINTED_INS_SUCC = false;
 
-      #ifdef __unix__
+      #if defined(__unix__) || defined(__linux__)
         if (has_lolcat() && has_neofetch()) {
           system("neofetch | lolcat; echo -e \"< INSTALLATION SUCCESSFUL >\nEnjoy! :)\" | lolcat");
           PRINTED_INS_SUCC = true;
@@ -937,7 +937,7 @@ int32_t main(
       if (!PRINTED_INS_SUCC)
         printf(KGRN "< INSTALLATION SUCCESSFUL >\nEnjoy! :)\n");
 
-      #ifdef _WIN32
+      #if defined(_WIN32)
         disable_ansi();
       #endif
 
@@ -950,7 +950,7 @@ int32_t main(
   free_char_2d(packages, &n_packages);
   free_char_2d(env_args, &n_env_args);
 
-  #ifdef _WIN32
+  #if defined(_WIN32)
     disable_ansi();
   #endif
 
