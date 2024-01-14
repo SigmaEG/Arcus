@@ -117,6 +117,8 @@ Refer to [env_args](#format) in regards to environment variables as such as `${A
 > 
 > In Windows, if your Shell is PowerShell the same is apparent.
 >
+> The same is for reading Shell Environment Variables. In `bash` it is the equivalent of `${VARIABLE_NAME}` whereas in PowerShell it would be `$env:VARIABLE_NAME`, be wary of this.
+>
 > An example of this, in `bash` would be the following:
 ```
 ...
