@@ -1,3 +1,5 @@
+#!/usr/bin/bash
+
 clang \
   -c \
   -Wall \
@@ -12,3 +14,5 @@ ar \
   libarcus.o
 
 rm -f libarcus.o
+
+echo "< SUCCESSFULLY COMPILED arcus.c INTO libarcus.a >"

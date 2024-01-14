@@ -1,0 +1,16 @@
+{
+  "ARCUS_SU_PACMAN",
+  "sudo pacman -S"
+},
+{
+  "ARCUS_DEFAULT_PACMAN_ARGS",
+  "--needed --noconfirm"
+},
+{
+  "ARCUS_YAY",
+  "yay -S"
+},
+{
+  "ARCUS_DEFAULT_YAY_ARGS",
+  "--needed --noconfirm"
+}
