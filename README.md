@@ -27,10 +27,10 @@ It is written in C and is meant to be easily configurable using `arcus.pkgs` and
 ```bash
 usage: arcus <operation> [...]
 operations:
-				arcus {-h --help}
-				arcus {-V --version}
-				arcus list {--ignore ...} (arguments after --ignore are listed as ignored packages, separated by a whitespace)
-				arcus install {--ignore ...} (may require root permissions, arguments after --ignore are listed as ignored packages, separated by a whitespace)
+        arcus {-h --help}
+        arcus {-V --version}
+        arcus list {--ignore ...} (arguments after --ignore are listed as ignored packages, separated by a whitespace)
+        arcus install {--ignore ...} (may require root permissions, arguments after --ignore are listed as ignored packages, separated by a whitespace)
 ```
 
 ## Format
@@ -38,20 +38,20 @@ operations:
 > static const char* env_args[][2] {...}
 ```
 {
-	"ARCUS_SU_PACMAN",
-	"sudo pacman -S"
+  "ARCUS_SU_PACMAN",
+  "sudo pacman -S"
 },
 {
-	"ARCUS_DEFAULT_PACMAN_ARGS",
-	"--needed --noconfirm"
+  "ARCUS_DEFAULT_PACMAN_ARGS",
+  "--needed --noconfirm"
 },
 {
-	"ARCUS_YAY",
-	"yay -S"
+  "ARCUS_YAY",
+  "yay -S"
 },
 {
-	"ARCUS_DEFAULT_YAY_ARGS",
-	"--needed --noconfirm"
+  "ARCUS_DEFAULT_YAY_ARGS",
+  "--needed --noconfirm"
 }
 ```
 > [!WARNING]
@@ -61,8 +61,8 @@ For example if you wanted to add the environment variable for compiling somethin
 ```
 ...
 {
-	"ARCUS_CLANG",
-	"clang -Wall -Wextra -pedantic -o"
+  "ARCUS_CLANG",
+  "clang -Wall -Wextra -pedantic -o"
 }
 ...
 ```
@@ -70,8 +70,8 @@ This environment variable can then be implemented in `arcus_config/arcus.pkgs` a
 ```
 ...
 {
-	"arcus",
-	"${ARCUS_CLANG} ${ARCUS_PACKAGES} ${ARCUS_PACKAGES}.c"
+  "arcus",
+  "${ARCUS_CLANG} ${ARCUS_PACKAGES} ${ARCUS_PACKAGES}.c"
 }
 ...
 ```
@@ -83,12 +83,12 @@ Where the environment variables expand to the following:
 > static const char* packages[][2] {...}
 ```
 {
-	"package-header",
-	"commands-to-run-to-install-package-header"
+  "package-header",
+  "commands-to-run-to-install-package-header"
 },
 {
-	"package-header-2",
-	"commands-to-run-to-install-package-header-2
+  "package-header-2",
+  "commands-to-run-to-install-package-header-2
 }
 ```
 
@@ -99,8 +99,8 @@ For example, if you wanted to install `neofetch` with `sudo pacman -S` you can i
 ```
 ...
 {
-	"neofetch",
-	"${ARCUS_SU_PACMAN} ${ARCUS_DEFAULT_PACMAN_ARGS} ${ARCUS_PACKAGES}
+  "neofetch",
+  "${ARCUS_SU_PACMAN} ${ARCUS_DEFAULT_PACMAN_ARGS} ${ARCUS_PACKAGES}
 }
 ...
 ```
@@ -123,8 +123,8 @@ Refer to [env_args](#format) in regards to environment variables as such as `${A
 ```
 ...
 {
-	"lolcat",
-	"${ARCUS_SU_PACMAN} ${ARCUS_DEFAULT_PACMAN_ARGS} ${ARCUS_PACKAGES}; echo \"Hello, World!\" | lolcat"
+  "lolcat",
+  "${ARCUS_SU_PACMAN} ${ARCUS_DEFAULT_PACMAN_ARGS} ${ARCUS_PACKAGES}; echo \"Hello, World!\" | lolcat"
 }
 ...
 ```
