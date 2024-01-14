@@ -112,14 +112,14 @@ Where the environment variables expand to the following:
 Refer to [env_args](#format) in regards to environment variables as such as `${ARCUS_SU_PACMAN}`, `${ARCUS_DEFAULT_PACMAN_ARGS}` and `${ARCUS_PACKAGES}` 
 
 > [!TIP]
-> If you wish to run multiple commands at once for each package, then refer to your Operating Systems guide on how to separate commands in your `Default Terminal` as `Arcus` takes use of `int system(const char* command)`.
+> If you wish to run multiple commands at once for each package, then refer to your Operating Systems guide on how to separate commands in your `Command Interpreter` as `Arcus` takes use of `int system(const char* command)`.
 > For example in `bash`, commands can be separated by trailing semi-colons (`;`).
 > 
-> In Windows, if your Shell is PowerShell the same is apparent.
+> In Windows, `int system(const char* command)` takes use of `cmd.exe` from `%PATH%`. To separate commands in `cmd.exe` you can use the ampersand `(&)` symbol.
 >
-> The same is for reading Shell Environment Variables. In `bash` it is the equivalent of `${VARIABLE_NAME}` whereas in PowerShell it would be `$env:VARIABLE_NAME`, be wary of this.
+> The same is for reading Shell Environment Variables. In `bash` it is the equivalent of `${VARIABLE_NAME}` whereas in `cmd.exe` it would be `%VARIABLE_NAME%`, be wary of this.
 >
-> An example of this, in `bash` would be the following:
+> An example of this, in `bash`, would be the following:
 ```
 ...
 {
