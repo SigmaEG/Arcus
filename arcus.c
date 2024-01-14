@@ -875,6 +875,10 @@ int32_t main(
           env_args == NULL ? "ENVIRONMENT VARIABLES" : ""
         );
 
+        #if defined(_WIN32)
+          disable_ansi();
+        #endif
+
         exit(1);
       }
 
@@ -908,6 +912,10 @@ int32_t main(
           packages == NULL && env_args == NULL ? " AND " : "",
           env_args == NULL ? "ENVIRONMENT VARIABLES" : ""
         );
+
+        #if defined(_WIN32)
+          disable_ansi();
+        #endif
 
         exit(1);
       }
