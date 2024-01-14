@@ -1,6 +1,6 @@
 # Arcus v1.1.2
 
-Arcus is a simple lightweight Scriptable Package Manager compliant with `-std=c99` whilst implementing OS-Specific implementations where required.
+Arcus is a simple lightweight Script Manager compliant with `-std=c99` whilst implementing OS-Specific implementations where required.
 
 It is written in C and is meant to be easily configurable using `arcus.pkgs` and `arcus.envs`. The syntax for such files is quite `strict` so please follow it accordingly.
 - If you wish to add more packages to the script then you may do so in the `arcus_config/arcus.pkgs` 2D Array.
